@@ -10,13 +10,14 @@
         <li v-for="(email, index) in emails">
           <input type="email" placeholder="Email address" 
             v-model=email.value 
+            ref="emails"
             @keyup.enter="addEmail(index+1)"
             @keyup.esc="removeEmail(index)" 
             :tabindex="index+2" />
-          <button @click.prevent="removeEmail(index)">-</button>
+          <button v-if="emails.length > 1" @click.prevent="removeEmail(index)">-</button>
         </li>
       </ol>
-      <button @click.prevent="addEmail(null)">+</button>
+      <button v-if="emails.length < MAX_EMAILS" @click.prevent="addEmail(null)">+</button>
     </fieldset>
     <fieldset>
       <legend>Settings</legend>
@@ -38,6 +39,7 @@
 <script>
   import axios from '~/plugins/axios'
   const EMPTY_EMAIL = () => { return {value: ''} }
+  const MAX_EMAILS = 9
 
   export default {
     data () {
@@ -46,6 +48,7 @@
         emails: [EMPTY_EMAIL()],
         fixedOrder: true,
         name: null,
+        MAX_EMAILS,
         errors: []
       }
     },
@@ -77,11 +80,15 @@
       },
       addEmail (index) {
         console.log('addEmail', index)
+        if (this.emails.length >= MAX_EMAILS) return false
         this.emails.splice(index || this.emails.length, 0, EMPTY_EMAIL())
+        this.$nextTick(() => this.$refs.emails[index].focus())
       },
       removeEmail (index) {
         console.log('removeEmail', index)
+        if (this.emails.length === 1) return false
         this.emails.splice(index, 1)
+        this.$nextTick(() => this.$refs.emails[Math.max(index - 1, 0)].focus())
       },
       updateEmail (text, index) {
         console.log('updateEmail', text, index)
