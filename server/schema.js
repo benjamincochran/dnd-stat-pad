@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const uuidv4 = require('uuid/v4')
-const mongoConnection = require('./mongoConnection')
   
-mongoose.connect('mongodb://' + mongoConnection + '/dnd-stat-pad?ssl=true')
+mongoose.connect('mongodb://' + process.env.MONGO_CONNECTION + '/dnd-stat-pad?ssl=true')
 
 const CharacterSchema = new mongoose.Schema({
   _id: { type: String, default: uuidv4 },
