@@ -19,7 +19,6 @@ router.post('/campaigns', function (req, res, next) {
     let emails = req.body.emails
     let fixedOrder = req.body.fixedOrder
     let name = req.body.name
-    console.log('post to campaigns', emails, fixedOrder, diceCount)
     Campaign.create({
       diceCount: diceCount,
       fixedOrder: fixedOrder,

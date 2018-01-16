@@ -1,5 +1,8 @@
 <template>
   <section>
+    <div class="errors" v-if="errors.length">
+      {{ errors }}
+    </div>
     <input type="text" placeholder="Kick off a new Campaign" v-model="name" required tabindex="1" />
     <fieldset>
       <legend>Enter email addresses for your party</legend>
@@ -42,7 +45,8 @@
         diceCount: 4,
         emails: [EMPTY_EMAIL()],
         fixedOrder: true,
-        name: null
+        name: null,
+        errors: []
       }
     },
     head () {
@@ -62,9 +66,13 @@
           fixedOrder: this.fixedOrder,
           name: this.name
         }).then((response) => {
+          console.log(response.data.id)
           this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
         }).catch((response) => {
           console.log('badness!', response)
+          /* this.errors = Object.values(response.error.errors).map((err) => {
+            return err.message
+          }) */
         })
       },
       addEmail (index) {
