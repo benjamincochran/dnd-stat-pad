@@ -1,5 +1,5 @@
 <template>
   <footer>
-    <a href="/">Footer goes here</a><!-- should be a nuxt-link -->
+    <nuxt-link to="/">Footer goes here</nuxt-link>
   </footer>
 </template>
