@@ -1,70 +1,80 @@
 <template>
-  <section>
-    <div class="errors" v-if="errors.length">
-      {{ errors }}
-    </div>
-    <input type="text" placeholder="Kick off a new Campaign" v-model="name" required tabindex="1" />
-    <fieldset>
-      <legend>Enter email addresses for your party</legend>
-      <ol>
-        <li v-for="(email, index) in emails">
-          <input type="email" placeholder="Email address" 
-            v-model=email.value 
-            ref="emails"
-            @keyup.enter="addEmail(index+1)"
-            @keyup.esc="removeEmail(index)" 
-            :tabindex="index+2" />
-          <button v-if="emails.length > 1" @click.prevent="removeEmail(index)">-</button>
-        </li>
-      </ol>
-      <button v-if="emails.length < MAX_EMAILS" @click.prevent="addEmail(null)">+</button>
-    </fieldset>
-    <fieldset>
-      <legend>Settings</legend>
-      <div>
-        <select v-model="diceCount">
-          <option>3</option>
-          <option>4</option>
-        </select>
-        <span>d6</span>
+  <main class="section">
+    <section class="container box content">
+      <h1>D&amp;D Stat Pad</h1>
+      <p>
+        D&amp;D Stat Pad is a DM's tool that lets your players honestly roll up new 
+        characters, even if your party can't all get together before your first game.
+      </p>
+      <p>
+        All party members will get an email with an individual, one-time-use link that
+        lets them generate and (at your discretion) arrange ability scores.  You can see
+        all completed score arrays on a page that only you will have access to.
+      </p>
+    </section>
+    <form class="container box" @keyup.enter.prevent="false">
+      <div class="content">
+        <h2>Kick off a new campaign!</h2>
       </div>
-      <label>
-          <input type="checkbox" v-model="fixedOrder" />Fixed order
-      </label>
-    </fieldset>
-    <button v-on:click.prevent="onSubmit">Go!</button>
-  </section>
+      <b-message type="is-danger" v-if="errors.length">
+        {{ errors }}
+      </b-message>
+      <b-field label="Name your campaign">
+        <b-input type="text" placeholder="Ben's Totally Unique Setting" v-model="name" required />
+      </b-field>
+      <b-field label="Enter your players' emails">
+        <b-taginput
+            v-model="emails"
+            type="is-primary"
+            placeholder="foo@bar.com"
+            required
+            maxlength="50"
+            maxtags="9">
+        </b-taginput>
+      </b-field>
+      <b-field>
+        <b-select v-model="diceCount">
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </b-select>
+        <p class="control">
+          <span class="button is-static">d6</span>
+        </p>
+      </b-field>
+      <b-field>
+        <b-switch v-model="fixedOrder">
+          Fixed Order
+        </b-switch>
+      </b-field>
+      <b-field position="is-centered">
+        <button class="button is-primary is-large" v-on:click.prevent="onSubmit">Go!</button>
+      </b-field>
+    </form>
+  </main>
 </template>
 
 <script>
   import axios from '~/plugins/axios'
-  const EMPTY_EMAIL = () => { return {value: ''} }
-  const MAX_EMAILS = 9
 
   export default {
     data () {
       return {
         diceCount: 4,
-        emails: [EMPTY_EMAIL()],
-        fixedOrder: true,
+        emails: [],
+        fixedOrder: false,
         name: null,
-        MAX_EMAILS,
         errors: []
       }
     },
     head () {
       return {
-        title: 'Generate New Campaign'
+        title: 'Generate A New Campaign'
       }
     },
     methods: {
       onSubmit () {
         axios.post('/api/campaigns', {
-          emails: this.emails.filter((e) => {
-            return !!e.value || e.value !== ''
-          }).map((e) => {
-            return e.value
-          }),
+          emails: this.emails,
           diceCount: this.diceCount * 1,
           fixedOrder: this.fixedOrder,
           name: this.name
@@ -77,27 +87,11 @@
             return err.message
           }) */
         })
-      },
-      addEmail (index) {
-        console.log('addEmail', index)
-        if (this.emails.length >= MAX_EMAILS) return false
-        this.emails.splice(index || this.emails.length, 0, EMPTY_EMAIL())
-        this.$nextTick(() => this.$refs.emails[index].focus())
-      },
-      removeEmail (index) {
-        console.log('removeEmail', index)
-        if (this.emails.length === 1) return false
-        this.emails.splice(index, 1)
-        this.$nextTick(() => this.$refs.emails[Math.max(index - 1, 0)].focus())
-      },
-      updateEmail (text, index) {
-        console.log('updateEmail', text, index)
-        this.emails[index] = text
       }
     }
   }
 </script>
 
-<style lang="scss">
-    
+<style lang="scss" scoped="true">
+  
 </style>

@@ -1,23 +1,25 @@
 <template>
-  <section>
-    <h1>{{ character.email }}</h1>
-    Finalized: {{ character.finalized }}<br/>
-    Fixed Order: {{ fixedOrder }}
-    <ul class="stats">
-      <li class="stat" v-for="(stat, index) in character.stats">
-        <template v-if="stat">
-          <span class="stat--text">{{ stat }}</span> 
-          <span class="stat--dice" v-if="dice[index].length > 0">{{ dice[index] }}</span>
-          <template v-if="!fixedOrder && !character.finalized">
-            <button v-if="index > 0" class="stat--move up" @click="move(index, UP)">^</button>
-            <button v-if="index < character.stats.length - 1" class="stat--move down" @click="move(index, DOWN)">v</button>
+  <main>
+    <section class="container box content">
+      <h1>{{ character.email }}</h1>
+      Finalized: {{ character.finalized }}<br/>
+      Fixed Order: {{ fixedOrder }}
+      <ul class="stats">
+        <li class="stat" v-for="(stat, index) in character.stats">
+          <template v-if="stat">
+            <span class="stat--text">{{ stat }}</span> 
+            <span class="stat--dice" v-if="dice[index].length > 0">{{ dice[index] }}</span>
+            <template v-if="!fixedOrder && !character.finalized">
+              <button v-if="index > 0" class="stat--move up" @click="move(index, UP)">^</button>
+              <button v-if="index < character.stats.length - 1" class="stat--move down" @click="move(index, DOWN)">v</button>
+            </template>
           </template>
-        </template>
-        <button v-else @click="roll(index)">Roll {{ diceCount }}d6!</button>
-      </li>
-    </ul>
-    <button v-if="!fixedOrder && !character.finalized" @click="finalize">Done!</button>
-  </section>
+          <button class="button is-primary" v-else @click="roll(index)">Roll {{ diceCount }}d6!</button>
+        </li>
+      </ul>
+      <button v-if="!fixedOrder && !character.finalized" @click="finalize">Done!</button>
+    </section>
+  </main>
 </template>
 
 <style lang="scss" scoped>

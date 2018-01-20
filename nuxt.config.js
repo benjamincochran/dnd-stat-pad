@@ -17,11 +17,17 @@ module.exports = {
   ** Global CSS
   */
   css: ['~/assets/css/main.css'],
+  plugins: ['~plugins/buefy'],
   /*
   ** Add axios globally
   */
   build: {
     vendor: ['axios'],
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false
+      }
+    },
     /*
     ** Run ESLINT on save
     */

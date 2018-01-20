@@ -1,52 +1,54 @@
 <template>
-  <div>
-    <nuxt/>
-    <my-footer/>
+  <div class="layout layout-default">
+    <site-header/>
+    <nuxt class="section"/>
+    <site-footer/>
   </div>
 </template>
 
 <script>
-import MyFooter from '~/components/Footer.vue'
+import SiteHeader from '~/components/Header.vue'
+import SiteFooter from '~/components/Footer.vue'
 
 export default {
   components: {
-    MyFooter
+    SiteHeader,
+    SiteFooter
   }
 }
 </script>
 
-<style>
-.container
-{
-  margin: 0;
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-}
+<style lang="scss">
+  @import "~bulma/sass/utilities/_all";
+  $primary: #ffae42;
+  $primary-invert: findColorInvert($primary);
+  $colors: ("primary": ($primary, $primary-invert));
+  @import "~bulma";
+  @import "~buefy/src/scss/buefy";
 
-.button, .button:visited
-{
-  display: inline-block;
-  color: black;
-  letter-spacing: 1px;
-  background-color: #fff;
-  border: 2px solid #000;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 45px;
-}
+  .layout-default {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
 
-.button:hover, .button:focus
-{
-  color: #fff;
-  background-color: #000;
-}
+  main.section {
+    flex: 1;
+    position: relative;
+    
+    &:before {
+      display: block;
+      content: ' ';
+      background-image: url('/sheet_dice.jpg');
+      background-size: cover;
+      opacity: 0.4;
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      z-index: 0;
+    }
 
-.title
-{
-  color: #000;
-  font-weight: 300;
-  font-size: 2.5em;
-  margin: 0;
-}
+    .box {
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+  }
 </style>
