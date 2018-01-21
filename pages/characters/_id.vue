@@ -33,30 +33,6 @@
   </section>
 </template>
 
-<style lang="scss" scoped>
-  .stat--arrows {
-    height: 100%;
-    position: relative;
-    width: 1.25rem;
-
-    .stat--arrow {
-      border: 0px;
-      background-color: transparent;
-      font-size: 1.25rem;
-      line-height: 0.85rem;
-      outline: 0;
-      padding: 0;
-      position: absolute;
-      &.up {
-        top: 0;
-      }
-      &.down {
-        bottom: 0;
-      }
-    }
-  }
-</style>
-
 <script>
   import AbilityScores from '~/components/AbilityScores.vue'
   import CampaignDetails from '~/components/CampaignDetails.vue'
@@ -136,3 +112,27 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .stat--arrows {
+    height: 100%;
+    position: relative;
+    width: 1.25rem;
+
+    .stat--arrow {
+      border: 0px;
+      background-color: transparent;
+      font-size: 1.25rem;
+      line-height: 0.85rem;
+      outline: 0;
+      padding: 0;
+      position: absolute;
+      &.up {
+        top: 0;
+      }
+      &.down {
+        bottom: 0;
+      }
+    }
+  }
+</style>
