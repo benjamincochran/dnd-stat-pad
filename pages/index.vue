@@ -12,12 +12,12 @@
         all completed score arrays on a page that only you will have access to.
       </p>
     </div>
-    <form class="container box" @keyup.enter.prevent="false">
+    <form class="container box" @keyup.enter.prevent>
       <div class="content">
         <h2>Kick off a new campaign!</h2>
       </div>
       <b-message type="is-danger" v-if="errors.length">
-        {{ errors }}
+        <p v-for="error in errors">{{ error }}</p>
       </b-message>
       <b-field label="Name your campaign">
         <b-input type="text" placeholder="Ben's Totally Unique Setting" v-model="name" required />
@@ -72,20 +72,23 @@
     },
     methods: {
       onSubmit () {
+        this.errors = []
         axios.post('/api/campaigns', {
           emails: this.emails,
           diceCount: this.diceCount * 1,
           fixedOrder: this.fixedOrder,
           name: this.name
-        }).then((response) => {
-          console.log(response.data.id)
-          this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
-        }).catch((response) => {
-          console.log('badness!', response)
-          /* this.errors = Object.values(response.error.errors).map((err) => {
-            return err.message
-          }) */
         })
+          .then((response) => {
+            this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
+          }).catch((error) => {
+            console.log('badness!', error.response)
+            Object.values(error.response.data.error.errors).map((err) => {
+              if (err.message) {
+                this.errors.push(err.message)
+              }
+            })
+          })
       }
     }
   }

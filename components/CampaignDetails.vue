@@ -29,7 +29,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   // obviously these don't belong here
   .container {
     display: flex;

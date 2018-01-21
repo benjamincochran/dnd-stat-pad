@@ -11,6 +11,24 @@
   </ul>
 </template>
 
+<script>
+  export default {
+    props: ['stats'],
+    data () {
+      return {
+        statIcons: [
+          {text: 'Strength', icon: 'http://game-icons.net/icons/lorc/originals/svg/strong.svg'},
+          {text: 'Dexterity', icon: 'http://game-icons.net/icons/delapouite/originals/svg/tightrope.svg'},
+          {text: 'Constitution', icon: 'http://game-icons.net/icons/lorc/originals/svg/heart-drop.svg'},
+          {text: 'Intelligence', icon: 'http://game-icons.net/icons/lorc/originals/svg/brain.svg'},
+          {text: 'Wisdom', icon: 'http://game-icons.net/icons/delapouite/originals/svg/eye-of-horus.svg'},
+          {text: 'Charisma', icon: 'http://game-icons.net/icons/lorc/originals/svg/charm.svg'}
+        ]
+      }
+    }
+  }
+</script>
+
 <style lang="scss" scoped>
   .stat {
 
@@ -41,21 +59,3 @@
 
   }
 </style>
-
-<script>
-  export default {
-    props: ['stats'],
-    data () {
-      return {
-        statIcons: [
-          {text: 'Strength', icon: 'http://game-icons.net/icons/lorc/originals/svg/strong.svg'},
-          {text: 'Dexterity', icon: 'http://game-icons.net/icons/delapouite/originals/svg/tightrope.svg'},
-          {text: 'Constitution', icon: 'http://game-icons.net/icons/lorc/originals/svg/heart-drop.svg'},
-          {text: 'Intelligence', icon: 'http://game-icons.net/icons/lorc/originals/svg/brain.svg'},
-          {text: 'Wisdom', icon: 'http://game-icons.net/icons/delapouite/originals/svg/eye-of-horus.svg'},
-          {text: 'Charisma', icon: 'http://game-icons.net/icons/lorc/originals/svg/charm.svg'}
-        ]
-      }
-    }
-  }
-</script>

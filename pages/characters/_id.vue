@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="character">
     <div class="container">
       <main class="box content">
         <h1>{{ character.email }}</h1>
@@ -56,7 +56,7 @@
     },
     data () {
       var dice = (new Array(6)).fill(new Array(0))
-      dice.splice(3, 1, [6, 5, 3, 1])
+      // dice.splice(3, 1, [6, 5, 3, 1])
       return {
         dice,
         UP,

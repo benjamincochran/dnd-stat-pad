@@ -12,7 +12,10 @@ const CharacterSchema = new mongoose.Schema({
 
 const CampaignSchema = new mongoose.Schema({
   _id: { type: String, default: uuidv4 },
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   diceCount: Number,
   fixedOrder: Boolean,
   created: { 
@@ -26,7 +29,7 @@ const CampaignSchema = new mongoose.Schema({
       validator: function(characters) {
         return characters.length > 0 && characters.length < 10
       },
-      message: 'You must have at least one character, and mo more than 9'
+      message: 'You must have at least 1 character, and no more than 9'
     }
   }
 })
