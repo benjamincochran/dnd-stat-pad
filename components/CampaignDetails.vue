@@ -13,6 +13,22 @@
   </aside>
 </template>
 
+<script>
+  import moment from 'moment'
+
+  const DATE_FORMAT = 'M/D/YY h:mm A'
+
+  export default {
+    props: ['campaign'],
+    data () {
+      var createdDate = moment(this.campaign.created)
+      this.campaign.created = createdDate.format(DATE_FORMAT)
+      this.campaign.expires = createdDate.add(14, 'days').format(DATE_FORMAT)
+      return this.campaign
+    }
+  }
+</script>
+
 <style lang="scss">
   // obviously these don't belong here
   .container {
@@ -46,19 +62,3 @@
 
   }
 </style>
-
-<script>
-  import moment from 'moment'
-
-  const DATE_FORMAT = 'M/D/YY h:mm A'
-
-  export default {
-    props: ['campaign'],
-    data () {
-      var createdDate = moment(this.campaign.created)
-      this.campaign.created = createdDate.format(DATE_FORMAT)
-      this.campaign.expires = createdDate.add(14, 'days').format(DATE_FORMAT)
-      return this.campaign
-    }
-  }
-</script>

@@ -19,13 +19,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bulma/sass/utilities/_all";
-  $primary: #ffae42;
-  $primary-invert: findColorInvert($primary);
-  $colors: ("primary": ($primary, $primary-invert));
-  @import "~bulma";
-  @import "~buefy/src/scss/buefy";
-
   .layout-default {
     display: flex;
     min-height: 100vh;

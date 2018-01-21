@@ -7,14 +7,12 @@
           This is the hub page for your campaign.  You may want to bookmark it, since it will be extremely difficult to recover if you lose the URL.
         </p>
         <h3>Characters</h3>
-        <ol class="characters">
-          <li v-for="character in campaign.characters" class="card">
-            <span><nuxt-link :to="{ path: '/characters/' + character._id }">{{ character._id }}</nuxt-link></span>
-            <span>{{ character.email }}</span>
-            <span>{{ character.finalized }}</span>
-            <ability-scores v-if="character.finalized" :stats="character.stats"/>
-          </li>
-        </ol>
+        <div v-for="character in campaign.characters" class="character card">
+          <span><nuxt-link :to="{ path: '/characters/' + character._id }">{{ character._id }}</nuxt-link></span>
+          <span>{{ character.email }}</span>
+          <span>{{ character.finalized }}</span>
+          <ability-scores v-if="character.finalized" :stats="character.stats"/>
+        </div>
       </main>
       <campaign-details :campaign="campaign" />
     </div>
@@ -69,7 +67,7 @@
     }
   }
 
-  .characters li > span {
+  .character > span {
     display: inline-block;
     & + span {
       padding-left: 10px;
