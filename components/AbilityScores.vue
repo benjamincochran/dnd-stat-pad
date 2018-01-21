@@ -24,7 +24,7 @@
       display: inline-block;
       vertical-align: middle;
       & + * {
-        margin-left: 0.5rem;
+        margin-left: 1rem;
       }
     }
 

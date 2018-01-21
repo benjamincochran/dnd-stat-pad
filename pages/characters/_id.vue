@@ -3,8 +3,6 @@
     <div class="container">
       <main class="box content">
         <h1>{{ character.email }}</h1>
-        Finalized: {{ character.finalized }}<br/>
-        Fixed Order: {{ campaign.fixedOrder }}
         <ability-scores :stats="character.stats" :dice="dice">
           <template slot="after" slot-scope="stat">
             <div v-if="!campaign.fixedOrder && !character.finalized" class="stat--arrows">
@@ -22,7 +20,7 @@
           <button 
             slot="empty" 
             slot-scope="stat" 
-            class="button is-primary is-outlined" 
+            class="button is-primary is-outlined stat--roll" 
             @click="roll(stat.index)">Roll!</button>
         </ability-scores>
         <!-- TODO: need a computed value here for non-null stats to only show button when non-fixed-order rolls are complete -->
@@ -134,5 +132,10 @@
         bottom: 0;
       }
     }
+  }
+
+  .stat--roll.button.is-primary.is-outlined {
+    font-weight: bold;
+    background-color: #FFFFFF;
   }
 </style>
