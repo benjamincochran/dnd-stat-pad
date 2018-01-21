@@ -16,12 +16,15 @@ function unsortedEquals(a1, a2) {
 
 router.get('/characters/:id', function (req, res, next) {
   Campaign
-    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder characters.$')
+    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder created characters.$')
     .then((campaign) => {
       if (!campaign || campaign.characters.length !== 1) return res.sendStatus(404)
       res.json({
-        diceCount: campaign.diceCount,
-        fixedOrder: campaign.fixedOrder,
+        campaign: {
+          diceCount: campaign.diceCount,
+          fixedOrder: campaign.fixedOrder,
+          created: campaign.created
+        },
         character: campaign.characters[0]
       })
     })
