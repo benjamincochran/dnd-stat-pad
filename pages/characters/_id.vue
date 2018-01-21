@@ -2,7 +2,8 @@
   <section class="character">
     <div class="container">
       <main class="box content">
-        <h1>{{ character.email }}</h1>
+        <h1 class="title">{{ character.email }}</h1>
+        <h4 class="subtitle">for "{{ campaign.name }}"</h4>
         <ability-scores :stats="character.stats" :dice="dice">
           <template slot="after" slot-scope="stat">
             <div v-if="!campaign.fixedOrder && !character.finalized" class="stat--arrows">
