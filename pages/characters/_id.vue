@@ -4,7 +4,7 @@
       <main class="box content">
         <h1 class="title">{{ character.email }}</h1>
         <h4 class="subtitle">for "{{ campaign.name }}"</h4>
-        <ability-scores :stats="character.stats" :dice="dice">
+        <ability-scores :stats="character.stats">
           <template slot="after" slot-scope="stat">
             <div v-if="!campaign.fixedOrder && !character.finalized" class="stat--arrows">
               <button 
@@ -16,7 +16,9 @@
                 class="stat--arrow down"
                 @click="move(stat.index, DOWN)">▼</button>
             </div>
-            <span class="stat--dice" v-if="dice && dice[stat.index].length > 0">{{ dice[stat.index] }}</span>
+            <div class="stat--dice" v-if="dice && dice[stat.index].length > 0">
+              <div class="stat--die" v-for="roll in dice[stat.index]" :key="roll" :data-rolled="roll"></div>
+            </div>
           </template>
           <button 
             slot="empty" 
@@ -56,8 +58,8 @@
         })
     },
     data () {
+      // var dice = (new Array(6)).fill([6, 5, 2, 1])
       var dice = (new Array(6)).fill(new Array(0))
-      // dice.splice(3, 1, [6, 5, 3, 1])
       return {
         dice,
         UP,
@@ -113,6 +115,8 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~assets/css/_colors";
+
   .stat--arrows {
     height: 100%;
     position: relative;
@@ -138,5 +142,36 @@
   .stat--roll.button.is-primary.is-outlined {
     font-weight: bold;
     background-color: #FFFFFF;
+  }
+
+  .stat--dice {
+    position: relative;
+
+    .stat--die {
+      background-color: $pencil-orange;
+      border: 1px solid black;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      height: 2.35rem;
+      width: 2.35rem;
+
+      &:before {
+        content: attr(data-rolled);
+        font-size: 1.3rem;
+      }
+
+      &:nth-of-type(n+4):after {
+        content: 'X';
+        color: red;
+        font-size: 2.5rem;
+        font-weight: bold;
+        position: absolute;
+        opacity: 0.925;
+      }
+    }
+
   }
 </style>
