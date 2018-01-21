@@ -30,35 +30,18 @@
 </script>
 
 <style lang="scss" scoped>
-  // obviously these don't belong here
-  .container {
+  dl {
     display: flex;
-    position: relative;
-
-    main {
-      width: 70%;
-      margin-right: 5%;
+    flex-wrap: wrap;
+    
+    dt {
+      font-weight: bold;
+      width: 40%;
     }
-
-    aside {
-      align-self: flex-start;
-      width: 25%;
-
-      dl {
-        display: flex;
-        flex-wrap: wrap;
-        
-        dt {
-          font-weight: bold;
-          width: 40%;
-        }
-        dd {
-          text-align: right;
-          margin-left: auto;
-          width: 60%;
-        }
-      }
+    dd {
+      text-align: right;
+      margin-left: auto;
+      width: 60%;
     }
-
   }
 </style>

@@ -1,0 +1,19 @@
+.section {
+  position: relative;
+
+  & > .container:not(.box) {
+    display: flex;
+    position: relative;
+
+    & > main {
+      width: 70%;
+      margin-right: 5%;
+    }
+
+    & > aside {
+      align-self: flex-start;
+      width: 25%;
+    }
+
+  }
+}

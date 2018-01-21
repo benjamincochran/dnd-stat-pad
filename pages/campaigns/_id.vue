@@ -48,25 +48,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .section {
-    position: relative;
-
-    .container {
-      display: flex;
-      position: relative;
-
-      main {
-        width: 70%;
-        margin-right: 5%;
-      }
-
-      aside {
-        width: 25%;
-      }
-
-    }
-  }
-
   .character > span {
     display: inline-block;
     & + span {
