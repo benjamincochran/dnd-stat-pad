@@ -1,58 +1,70 @@
 <template>
-  <main>
-    <section class="container box content">
+  <section>
+    <main class="container box content">
       <h1>{{ character.email }}</h1>
       Finalized: {{ character.finalized }}<br/>
       Fixed Order: {{ fixedOrder }}
-      <ul class="stats">
-        <li class="stat" v-for="(stat, index) in character.stats">
-          <template v-if="stat">
-            <span class="stat--text">{{ stat }}</span> 
-            <span class="stat--dice" v-if="dice[index].length > 0">{{ dice[index] }}</span>
-            <template v-if="!fixedOrder && !character.finalized">
-              <button v-if="index > 0" class="stat--move up" @click="move(index, UP)">^</button>
-              <button v-if="index < character.stats.length - 1" class="stat--move down" @click="move(index, DOWN)">v</button>
-            </template>
-          </template>
-          <button class="button is-primary" v-else @click="roll(index)">Roll {{ diceCount }}d6!</button>
-        </li>
-      </ul>
-      <button v-if="!fixedOrder && !character.finalized" @click="finalize">Done!</button>
-    </section>
-  </main>
+      <ability-scores :stats="character.stats" :dice="dice">
+        <template slot="after" slot-scope="stat">
+          <div v-if="!fixedOrder && !character.finalized" class="stat--arrows">
+            <button 
+              v-if="stat.index > 0" 
+              class="stat--arrow up"
+              @click="move(stat.index, UP)">▲</button>
+            <button 
+              v-if="stat.index < character.stats.length - 1" 
+              class="stat--arrow down"
+              @click="move(stat.index, DOWN)">▼</button>
+          </div>
+          <span class="stat--dice" v-if="dice && dice[stat.index].length > 0">{{ dice[stat.index] }}</span>
+        </template>
+        <button 
+          slot="empty" 
+          slot-scope="stat" 
+          class="button is-primary is-outlined" 
+          @click="roll(stat.index)">Roll {{ diceCount }}d6!</button>
+      </ability-scores>
+      <!-- TODO: need a computed value here for non-null stats to only show button when non-fixed-order rolls are complete -->
+      <button class="button is-primary is-large" v-if="!fixedOrder && !character.finalized" @click="finalize">Done!</button>
+    </main>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-  ul.stats {
-    li.stat {
-      margin: 7px 0px;
-      position: relative;
-      .stat--move {
-        border: 0px;
-        height: 10px;
-        line-height: 10px;
-        margin-left: 10px;
-        outline: 0;
-        padding: 0px;
-        position: absolute;
-        &.up {
-          top: 0px;
-        }
-        &.down {
-          bottom: 0px;
-        }
+  .stat--arrows {
+    height: 100%;
+    position: relative;
+    width: 1.25rem;
+
+    .stat--arrow {
+      border: 0px;
+      background-color: transparent;
+      font-size: 1.25rem;
+      line-height: 0.85rem;
+      outline: 0;
+      padding: 0;
+      position: absolute;
+      &.up {
+        top: 0;
+      }
+      &.down {
+        bottom: 0;
       }
     }
   }
 </style>
 
 <script>
+  import AbilityScores from '~/components/AbilityScores.vue'
   import axios from '~/plugins/axios'
 
   const UP = -1
   const DOWN = 1
 
   export default {
+    components: {
+      AbilityScores
+    },
     asyncData ({ params, error }) {
       return axios.get('/api/characters/' + params.id)
         .then((res) => {
@@ -64,10 +76,17 @@
         })
     },
     data () {
+      var dice = (new Array(6)).fill(new Array(0))
+      dice.splice(3, 1, [6, 5, 3, 1])
       return {
-        dice: (new Array(6)).fill(new Array(0)),
+        dice,
         UP,
         DOWN
+      }
+    },
+    head () {
+      return {
+        title: `Character: ${this.character.email}`
       }
     },
     methods: {

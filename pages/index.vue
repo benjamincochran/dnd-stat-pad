@@ -1,6 +1,6 @@
 <template>
-  <main class="section">
-    <section class="container box content">
+  <section>
+    <div class="container box content">
       <h1>D&amp;D Stat Pad</h1>
       <p>
         D&amp;D Stat Pad is a DM's tool that lets your players honestly roll up new 
@@ -11,7 +11,7 @@
         lets them generate and (at your discretion) arrange ability scores.  You can see
         all completed score arrays on a page that only you will have access to.
       </p>
-    </section>
+    </div>
     <form class="container box" @keyup.enter.prevent="false">
       <div class="content">
         <h2>Kick off a new campaign!</h2>
@@ -27,7 +27,6 @@
             v-model="emails"
             type="is-primary"
             placeholder="foo@bar.com"
-            required
             maxlength="50"
             maxtags="9">
         </b-taginput>
@@ -50,7 +49,7 @@
         <button class="button is-primary is-large" v-on:click.prevent="onSubmit">Go!</button>
       </b-field>
     </form>
-  </main>
+  </section>
 </template>
 
 <script>

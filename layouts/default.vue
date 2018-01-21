@@ -30,25 +30,25 @@ export default {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
 
-  main.section {
-    flex: 1;
-    position: relative;
-    
-    &:before {
-      display: block;
-      content: ' ';
-      background-image: url('/sheet_dice.jpg');
-      background-size: cover;
-      opacity: 0.4;
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      z-index: 0;
-    }
+    .section {
+      flex: 1;
+      position: relative;
+      
+      &:before {
+        display: block;
+        content: ' ';
+        background-image: url('/sheet_dice.jpg');
+        background-size: cover;
+        opacity: 0.4;
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: 0;
+      }
 
-    .box {
-      background-color: rgba(255, 255, 255, 0.85);
+      .box {
+        background-color: rgba(255, 255, 255, 0.85);
+      }
     }
   }
 </style>
