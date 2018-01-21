@@ -3,8 +3,8 @@
     <div class="container box content">
       <h1>D&amp;D Stat Pad</h1>
       <p>
-        D&amp;D Stat Pad is a DM's tool that lets your players honestly roll up new 
-        characters, even if your party can't all get together before your first game.
+        D&amp;D Stat Pad is a DM's tool that lets your players roll up new characters
+        <i>honestly</i>, even if you can't be there to watch them do it.
       </p>
       <p>
         All party members will get an email with an individual, one-time-use link that
