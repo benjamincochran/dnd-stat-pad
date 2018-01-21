@@ -1,5 +1,6 @@
+@import "~assets/css/_colors";
 @import "~bulma/sass/utilities/_all";
-$primary: #ffae42;
+$primary: $pencil-orange;
 $primary-invert: findColorInvert($primary);
 $colors: (
     "white": ($white, $black),
