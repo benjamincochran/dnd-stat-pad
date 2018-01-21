@@ -16,41 +16,25 @@
           </li>
         </ol>
       </main>
-      <aside class="box content">
-        <h3>Settings</h3> 
-        <dl>
-          <dt>Dice</dt><dd>{{ campaign.diceCount }}d6</dd>
-          <dt>Fixed Order</dt><dd>{{ campaign.fixedOrder }}</dd>
-        </dl>
-        <h3>Time Remaining</h3>
-        <dl>
-          <dt>Created</dt><dd>{{ campaign.created }}</dd>
-          <dt>Expires</dt><dd>{{ campaign.expires }}</dd>
-        </dl>
-      </aside>
+      <campaign-details :campaign="campaign" />
     </div>
   </section>
 </template>
 
 <script>
   import AbilityScores from '~/components/AbilityScores.vue'
+  import CampaignDetails from '~/components/CampaignDetails.vue'
   import axios from '~/plugins/axios'
-  import moment from 'moment'
-
-  const DFMT = 'M/D/YY h:mm A'
 
   export default {
     components: {
-      AbilityScores
+      AbilityScores,
+      CampaignDetails
     },
     asyncData ({ params, error }) {
       return axios.get('/api/campaigns/' + params.id)
         .then((res) => {
-          var campaign = res.data
-          var createdDate = moment(campaign.created)
-          campaign.created = createdDate.format(DFMT)
-          campaign.expires = createdDate.add(14, 'days').format(DFMT)
-          return { campaign }
+          return { campaign: res.data }
         })
         .catch((e) => {
           console.error('error', e.message)
@@ -80,22 +64,6 @@
 
       aside {
         width: 25%;
-
-        dl {
-          display: flex;
-          flex-wrap: wrap;
-          
-          dt {
-            font-weight: bold;
-            width: 40%;
-          }
-          dd {
-            text-align: right;
-            margin-left: auto;
-            width: 60%;
-          }
-        }
-
       }
 
     }
