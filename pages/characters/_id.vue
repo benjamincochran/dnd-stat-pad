@@ -16,11 +16,9 @@
                 class="stat--arrow down"
                 @click="move(stat.index, DOWN)">▼</button>
             </div>
-            <transition name="fade" appear>
-              <div class="stat--dice" v-if="dice && dice[stat.index].length > 0">
-                <div class="stat--die" v-for="roll in dice[stat.index]" :data-rolled="roll"></div>
-              </div>
-            <</transition>
+            <transition-group name="roll-dice" tag="div" class="stat--dice" appear>
+              <div class="stat--die" v-for="(roll, index) in dice[stat.index]" :data-rolled="roll" :key="index"></div>
+            <</transition-group>
           </template>
           <button 
             slot="empty" 
@@ -119,12 +117,23 @@
 
 <style lang="scss">
   @import "~assets/css/_colors";
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  $roll-time: 200ms;
+  
+  .roll-dice-enter, .show-stat-enter /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+  }
+
+  .show-stat-enter-active {
+    transition: opacity 0.5s ease-in #{$roll-time * 4}; // ideally, "4" should come from data
+  }
+
+  .roll-dice-enter-active {
+    transition: opacity 0.5s;
+    @for $i from 1 through 4 {  // ideally, "4" should come from data
+      &:nth-of-type(#{$i}) {
+        transition-delay: #{$roll-time * $i}; 
+      }
+    }
   }
 
   .stat--arrows {
