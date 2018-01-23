@@ -48,13 +48,15 @@
 
     .stat--icon {
       display: inline-block;
-      height: 100%;
-      width: auto;
+      height: 2.5rem;
+      width: 2.5rem;
     }
 
     .stat--text {
       line-height: 2rem;
       font-size: 2rem;
+      text-align: right;
+      width: 2.25rem;
     }
 
   }
