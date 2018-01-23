@@ -16,9 +16,11 @@
                 class="stat--arrow down"
                 @click="move(stat.index, DOWN)">▼</button>
             </div>
-            <div class="stat--dice" v-if="dice && dice[stat.index].length > 0">
-              <div class="stat--die" v-for="roll in dice[stat.index]" :key="roll" :data-rolled="roll"></div>
-            </div>
+            <transition name="fade" appear>
+              <div class="stat--dice" v-if="dice && dice[stat.index].length > 0">
+                <div class="stat--die" v-for="roll in dice[stat.index]" :data-rolled="roll"></div>
+              </div>
+            <</transition>
           </template>
           <button 
             slot="empty" 
@@ -63,7 +65,8 @@
       return {
         dice,
         UP,
-        DOWN
+        DOWN,
+        show: false
       }
     },
     head () {
@@ -114,8 +117,15 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import "~assets/css/_colors";
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 
   .stat--arrows {
     height: 100%;
