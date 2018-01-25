@@ -17,12 +17,12 @@
     data () {
       return {
         statIcons: [
-          {text: 'Strength', icon: 'http://game-icons.net/icons/lorc/originals/svg/strong.svg'},
-          {text: 'Dexterity', icon: 'http://game-icons.net/icons/delapouite/originals/svg/tightrope.svg'},
-          {text: 'Constitution', icon: 'http://game-icons.net/icons/lorc/originals/svg/heart-drop.svg'},
-          {text: 'Intelligence', icon: 'http://game-icons.net/icons/lorc/originals/svg/brain.svg'},
-          {text: 'Wisdom', icon: 'http://game-icons.net/icons/delapouite/originals/svg/eye-of-horus.svg'},
-          {text: 'Charisma', icon: 'http://game-icons.net/icons/lorc/originals/svg/charm.svg'}
+          {text: 'Strength', icon: '/svg/strong.svg'},
+          {text: 'Dexterity', icon: '/svg/tightrope.svg'},
+          {text: 'Constitution', icon: '/svg/heart-drop.svg'},
+          {text: 'Intelligence', icon: '/svg/brain.svg'},
+          {text: 'Wisdom', icon: '/svg/eye-of-horus.svg'},
+          {text: 'Charisma', icon: '/svg/charm.svg'}
         ]
       }
     }
@@ -31,7 +31,6 @@
 
 <style lang="scss" scoped>
   .stat {
-
     margin: 15px 0px;
     height: 2.5rem;
     line-height: 2.5rem;
