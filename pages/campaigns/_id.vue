@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="campaign">
     <div class="container">
       <main class="box content">
         <h1>{{ campaign.name }}</h1>
@@ -14,7 +14,9 @@
           <ability-scores v-if="character.finalized" :stats="character.stats"/>
         </div>
       </main>
-      <campaign-details :campaign="campaign" />
+      <aside>
+        <campaign-details :campaign="campaign" />
+      </aside>
     </div>
   </section>
 </template>

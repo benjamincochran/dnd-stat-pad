@@ -3,19 +3,21 @@
 .section {
   position: relative;
 
-  & > .container:not(.box) {
-    display: flex;
-    position: relative;
+  @media screen and (min-width: 800px) {
+    & > .container:not(.box) {
+      display: flex;
+      position: relative;
 
-    & > main {
-      width: 70%;
-      margin-right: 5%;
+      & > main {
+        flex: 1;
+      }
+
+      & > aside {
+        align-self: flex-start;
+        box-sizing: content-box;
+        margin-left: 3rem;
+        flex: 0 0 310px;
+      }
     }
-
-    & > aside {
-      align-self: flex-start;
-      width: 25%;
-    }
-
   }
 }

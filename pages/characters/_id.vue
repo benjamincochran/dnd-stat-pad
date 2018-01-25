@@ -18,7 +18,7 @@
             </div>
             <transition-group name="roll-dice" tag="div" class="stat--dice" appear>
               <div class="stat--die" v-for="(roll, index) in dice[stat.index]" :data-rolled="roll" :key="index"></div>
-            <</transition-group>
+            </transition-group>
           </template>
           <button 
             slot="empty" 
@@ -29,7 +29,9 @@
         <!-- TODO: need a computed value here for non-null stats to only show button when non-fixed-order rolls are complete -->
         <button class="button is-primary is-large" v-if="!campaign.fixedOrder && !character.finalized" @click="finalize">Done!</button>
       </main>
-      <campaign-details :campaign="campaign" />
+      <aside>
+        <campaign-details :campaign="campaign" />
+      </aside>
     </div>
   </section>
 </template>
@@ -176,16 +178,21 @@
       margin-left: 5px;
       height: 2.35rem;
       width: 2.35rem;
+      font-size: 1.5rem;
+      @media screen and (max-width: 500px) {
+        height: 1.4rem;
+        width: 1.4rem;
+        font-size: 1rem;
+      }
 
       &:before {
         content: attr(data-rolled);
-        font-size: 1.3rem;
       }
 
       &:nth-of-type(n+4):after {
         content: 'X';
         color: red;
-        font-size: 2.5rem;
+        font-size: 110%;
         font-weight: bold;
         position: absolute;
         opacity: 0.925;

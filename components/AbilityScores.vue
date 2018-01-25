@@ -30,6 +30,11 @@
 </script>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 500px) {
+    .stats {
+      margin-left: 0;
+    }
+  }
   .stat {
     margin: 15px 0px;
     height: 2.5rem;

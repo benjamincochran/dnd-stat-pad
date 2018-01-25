@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="homepage">
     <div class="container box content">
       <h1>D&amp;D Stat Pad</h1>
       <p>

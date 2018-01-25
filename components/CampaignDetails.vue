@@ -1,5 +1,5 @@
 <template>
-  <aside class="box content">
+  <div class="box content">
     <h3>Settings</h3> 
     <dl>
       <dt>Dice</dt><dd>{{ diceCount }}d6</dd>
@@ -10,7 +10,7 @@
       <dt>Created</dt><dd>{{ created }}</dd>
       <dt>Expires</dt><dd>{{ expires }}</dd>
     </dl>
-  </aside>
+  </div>
 </template>
 
 <script>
