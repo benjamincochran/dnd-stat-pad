@@ -20,7 +20,7 @@
     "moment": "^2.20.1",
     "mongoose": "^5.0.0-rc2",
     "node-sass": "^4.7.2",
-    "nodemailer": "^4.4.1",
+    "nodemailer": "^4.4.2",
     "nuxt": "^1.1.0",
     "roll": "^1.2.0",
     "sass-loader": "^6.0.6",

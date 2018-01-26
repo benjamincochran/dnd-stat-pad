@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { Campaign } from '../schema'   
+import { Campaign } from '../schema'
+import Mailer from '../mailer'  
 
 const router = Router()
 
@@ -31,6 +32,7 @@ router.post('/campaigns', function (req, res, next) {
         }
       })
     })
+    .then(Mailer.inviteAll)
     .then((campaign) => res.send({ id: campaign._id }))
     .catch((error) => {
       console.error(error)
