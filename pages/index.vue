@@ -82,7 +82,6 @@
           .then((response) => {
             this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
           }).catch((error) => {
-            console.log('badness!', error.response)
             Object.values(error.response.data.error.errors).map((err) => {
               if (err.message) {
                 this.errors.push(err.message)
