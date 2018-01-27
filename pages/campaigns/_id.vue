@@ -80,7 +80,7 @@
 
     .character {
       margin: 0 1% 2%;
-      @media screen and (min-width: 500px) {
+      @media screen and (min-width: 1024px) {
         float: left;
         width: 48%;
       }
