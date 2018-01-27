@@ -30,38 +30,36 @@
 </script>
 
 <style lang="scss" scoped>
-  @media screen and (max-width: 500px) {
-    .stats {
+  .stats {
+    @media screen and (max-width: 500px) {
       margin-left: 0;
     }
-  }
-  .stat {
-    margin: 15px 0px;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    position: relative;
-    list-style-type: none;
+    .stat {
+      margin: 1em 0;
+      height: 2.5em;
+      line-height: 2.5em;
+      position: relative;
+      list-style-type: none;
 
-    & > * {
-      display: inline-block;
-      vertical-align: middle;
-      & + * {
-        margin-left: 1rem;
+      & > * {
+        display: inline-block;
+        vertical-align: middle;
+        & + * {
+          margin-left: 2%;
+        }
+      }
+
+      .stat--icon {
+        display: inline-block;
+        height: 2.5em;
+        width: 2.5em;
+      }
+
+      .stat--text {
+        font-size: 2em;
+        text-align: right;
+        width: 1.25em;
       }
     }
-
-    .stat--icon {
-      display: inline-block;
-      height: 2.5rem;
-      width: 2.5rem;
-    }
-
-    .stat--text {
-      line-height: 2rem;
-      font-size: 2rem;
-      text-align: right;
-      width: 2.25rem;
-    }
-
   }
 </style>
