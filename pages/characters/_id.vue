@@ -26,8 +26,7 @@
             class="button is-primary is-outlined stat--roll" 
             @click="roll(stat.index)">Roll!</button>
         </ability-scores>
-        <!-- TODO: need a computed value here for non-null stats to only show button when non-fixed-order rolls are complete -->
-        <button class="button is-primary is-large" v-if="!campaign.fixedOrder && !character.finalized" @click="finalize">Done!</button>
+        <button class="button is-primary is-large" v-if="showDoneButton" @click="finalize">Done!</button>
       </main>
       <aside>
         <campaign-details :campaign="campaign" />
@@ -60,13 +59,19 @@
         })
     },
     data () {
-      // var dice = (new Array(6)).fill([6, 5, 2, 1])
       var dice = (new Array(6)).fill(new Array(0))
       return {
         dice,
         UP,
         DOWN,
         show: false
+      }
+    },
+    computed: {
+      showDoneButton () {
+        return !this.campaign.fixedOrder && // only relevant for non-fixed-order campaigns
+              this.character.stats.filter(function (stat) { return stat === null }).length === 0 && // no missing stats
+              !this.character.finalized // not already finalized
       }
     },
     head () {
