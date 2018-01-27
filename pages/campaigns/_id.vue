@@ -79,9 +79,11 @@
     }
 
     .character {
-      float: left;
       margin: 0 1% 2%;
-      width: 48%;
+      @media screen and (min-width: 500px) {
+        float: left;
+        width: 48%;
+      }
 
       .stats {
         display: flex;
