@@ -16,7 +16,7 @@
               :class="{'card-content': true, 'is-faded': !character.finalized}" 
               :stats="character.finalized ? character.stats : emptyStats" />
             <footer class="card-footer">
-              <a @click=comingSoon class="card-footer-item" target="_blank">Resend Email</a>
+              <a @click=comingSoon class="card-footer-item">Resend Email</a>
               <a @click=comingSoon class="card-footer-item">Grant Re-roll</a>
             </footer>
           </div>

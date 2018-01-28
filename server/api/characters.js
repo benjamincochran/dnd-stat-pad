@@ -50,7 +50,7 @@ router.post('/characters/:id/roll', function(req, res, next) {
       return Campaign.findOneAndUpdate(
         { 'characters': { $elemMatch: { '_id': req.params.id, 'finalized': false } } }, 
         { $set: setArgs },
-        { new: true }
+        { new: true, projection: { 'characters': { $elemMatch: { '_id': req.params.id } } } }
       ).then((campaign) => Promise.resolve({campaign, roll}))
     })
     .then(({campaign, roll}) => {
