@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import Roll from 'roll'
 import { Campaign } from '../schema'
+import mailer from '../mailer'
   
 const router = Router()
 
@@ -79,6 +80,7 @@ router.post('/characters/:id/arrange', function(req, res, next) {
     })
     .then(() => res.sendStatus(204))
     .catch((error) => {
+      console.error(error)
       res.sendStatus(500)
     })
 })
@@ -90,9 +92,23 @@ router.post('/characters/:id/finalize', function(req, res, next) {
   )
   .then(() => res.sendStatus(204))
   .catch((error) => {
-    console.error(error.message)
+    console.error(error)
     res.sendStatus(500)
   })
+})
+
+router.post('/characters/:id/invite', function(req, res, next) {
+  Campaign
+    .findOne({'characters._id': req.params.id}, 'name characters.$')
+    .then((campaign) => {
+      if (!campaign || campaign.characters.length !== 1) return res.sendStatus(404)
+      return mailer.inviteOne(campaign, campaign.characters[0])
+    })
+    .then(() => res.sendStatus(204))
+    .catch((error) => {
+      console.error(error)
+      res.status(500).end(error.message)
+    })
 })
 
 export default router

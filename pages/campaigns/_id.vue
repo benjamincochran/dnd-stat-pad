@@ -16,7 +16,7 @@
               :class="{'card-content': true, 'is-faded': !character.finalized}" 
               :stats="character.finalized ? character.stats : emptyStats" />
             <footer class="card-footer">
-              <a @click=comingSoon class="card-footer-item">Resend Email</a>
+              <a @click=resend(character) class="card-footer-item">Resend Email</a>
               <a @click=comingSoon class="card-footer-item">Grant Re-roll</a>
             </footer>
           </div>
@@ -33,6 +33,7 @@
   import AbilityScores from '~/components/AbilityScores.vue'
   import CampaignDetails from '~/components/CampaignDetails.vue'
   import axios from '~/plugins/axios'
+  import mailTemplates from '~/server/mailer/templates'
 
   export default {
     components: {
@@ -64,6 +65,38 @@
         this.$toast.open({
           message: 'Coming in a future release',
           type: 'is-dark'
+        })
+      },
+      resend (character) {
+        this.$dialog.confirm({
+          message: `If an email was not delivered initially, it may be because the target 
+            server is filtering out emails from the DND Stat Pad origin address.  Alternately,
+            since this site is still in alpha, it may have reached its daily limit of emails
+            that can be sent.  Either way, we recommend that you resend from your personal
+            email address.`,
+          cancelText: 'No, you send it',
+          confirmText: 'OK, I\'ll handle it',
+          type: 'is-primary',
+          onConfirm: () => {
+            var subject = mailTemplates.generateSubject(this.campaign)
+            var body = mailTemplates.generateText(character)
+            var mailto = encodeURI(`${character.email}?subject=${subject}&body=${body}`)
+            window.open(`mailto:${mailto}`, '_blank')
+          },
+          onCancel: () => {
+            axios.post(`/api/characters/${character._id}/invite`)
+              .then(() => this.$toast.open({
+                message: `Email sent to ${character.email}`,
+                type: 'is-dark'
+              }))
+              .catch((e) => {
+                console.error(e)
+                this.$toast.open({
+                  message: 'Email could not be sent',
+                  type: `is-error`
+                })
+              })
+          }
         })
       }
     }
