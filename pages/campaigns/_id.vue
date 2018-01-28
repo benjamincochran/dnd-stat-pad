@@ -70,7 +70,7 @@
       resend (character) {
         this.$dialog.confirm({
           message: `If an email was not delivered initially, it may be because the target 
-            server is filtering out emails from the DND Stat Pad origin address.  Alternately,
+            server is filtering out emails from the D&D Stat Pad origin address.  Alternately,
             since this site is still in alpha, it may have reached its daily limit of emails
             that can be sent.  Either way, we recommend that you resend from your personal
             email address.`,
