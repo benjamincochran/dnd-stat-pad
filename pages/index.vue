@@ -79,16 +79,16 @@
           fixedOrder: this.fixedOrder,
           name: this.name
         })
-        .then((response) => {
-          this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
-        })
-        .catch((error) => {
-          Object.values(error.response.data.error.errors).map((err) => {
-            if (err.message) {
-              this.errors.push(err.message)
-            }
+          .then((response) => {
+            this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
           })
-        })
+          .catch((error) => {
+            Object.values(error.response.data.error.errors).map((err) => {
+              if (err.message) {
+                this.errors.push(err.message)
+              }
+            })
+          })
       }
     }
   }
