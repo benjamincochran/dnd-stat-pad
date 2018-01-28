@@ -3,13 +3,12 @@
     <div class="container box content">
       <h1>D&amp;D Stat Pad</h1>
       <p>
-        D&amp;D Stat Pad is a DM's tool that lets your players roll up new characters
-        <i>honestly</i>, even if you can't be there to watch them do it.
+        D&amp;D Stat Pad is a DM's tool that lets your players roll legitimate, random ability scores for new characters, even if you can't be there to see them do it.
       </p>
       <p>
-        All party members will get an email with an individual, one-time-use link that
-        lets them generate and (at your discretion) arrange ability scores.  You can see
-        all completed score arrays on a page that only you will have access to.
+        All party members will get an email with an individualed link that will let them
+        generate and (at your discretion) arrange ability scores, once and only once.
+        You can track their completed rolls on a page that only you will have access to.
       </p>
     </div>
     <form class="container box" @keyup.enter.prevent>
