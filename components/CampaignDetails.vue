@@ -23,7 +23,7 @@
     data () {
       var createdDate = moment(this.campaign.created)
       this.campaign.created = createdDate.format(DATE_FORMAT)
-      this.campaign.expires = createdDate.add(14, 'days').format(DATE_FORMAT)
+      this.campaign.expires = createdDate.add(7, 'days').format(DATE_FORMAT)
       return this.campaign
     }
   }

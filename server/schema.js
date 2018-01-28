@@ -31,7 +31,7 @@ const CampaignSchema = new mongoose.Schema({
   created: { 
     type: Date, 
     default: Date.now, 
-    expires: '14d' // TODO: make this variable, expose value on page
+    expires: '7d' // TODO: make this variable, expose value on page
   }, 
   characters: {
     type: [CharacterSchema],
