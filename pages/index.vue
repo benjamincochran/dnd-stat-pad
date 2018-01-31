@@ -11,7 +11,7 @@
         You can track their completed rolls on a page that only you will have access to.
       </p>
     </div>
-    <form class="container box" @keyup.enter.prevent>
+    <form class="container box" @submit.prevent="onSubmit">
       <div class="content">
         <h2>Kick off a new campaign!</h2>
       </div>
@@ -19,7 +19,7 @@
         <p v-for="error in errors">{{ error }}</p>
       </b-message>
       <b-field label="Name your campaign">
-        <b-input type="text" placeholder="Ben's Totally Unique Setting" v-model="name" required />
+        <b-input type="text" placeholder="Ben's Totally Unique Setting" v-model="name" />
       </b-field>
       <b-field label="Enter your players' emails">
         <b-taginput
@@ -44,17 +44,28 @@
           Fixed Order
         </b-switch>
       </b-field>
+      <vue-recaptcha 
+        ref="invisibleRecaptcha"
+        @verify="onVerify"
+        @expired="onExpire"
+        size="invisible"
+        sitekey="6LfqcUMUAAAAADgd_eZzw4CawebWT4rsEF4dw-4w">
+      </vue-recaptcha>
       <b-field position="is-centered">
-        <button class="button is-primary is-large" v-on:click.prevent="onSubmit">Go!</button>
+        <button class="button is-primary is-large" type="submit">Go!</button>
       </b-field>
     </form>
   </section>
 </template>
 
 <script>
+  import VueRecaptcha from 'vue-recaptcha'
   import axios from '~/plugins/axios'
 
   export default {
+    components: {
+      VueRecaptcha
+    },
     data () {
       return {
         diceCount: 4,
@@ -66,12 +77,24 @@
     },
     head () {
       return {
-        title: 'Generate A New Campaign'
+        title: 'Generate A New Campaign',
+        script: [
+          {
+            src: 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
+            async: false,
+            defer: true
+          }
+        ]
       }
     },
     methods: {
-      onSubmit () {
-        this.errors = []
+      onExpire () {
+        this.$toast.open({
+          message: 'Recaptcha problems!',
+          type: `is-error`
+        })
+      },
+      onVerify (response) {
         axios.post('/api/campaigns', {
           emails: this.emails,
           diceCount: this.diceCount * 1,
@@ -88,6 +111,10 @@
               }
             })
           })
+      },
+      onSubmit () {
+        this.errors = []
+        this.$refs.invisibleRecaptcha.execute()
       }
     }
   }
