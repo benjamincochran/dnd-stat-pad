@@ -6,7 +6,7 @@
         D&amp;D Stat Pad is a DM's tool that lets your players roll legitimate, random ability scores for new characters, even if you can't be there to see them do it.
       </p>
       <p>
-        All party members will get an email with an individualed link that will let them
+        All party members will get an email with an individualized link that will let them
         generate and (at your discretion) arrange ability scores, once and only once.
         You can track their completed rolls on a page that only you will have access to.
       </p>
