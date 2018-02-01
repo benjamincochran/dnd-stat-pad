@@ -74,7 +74,7 @@
             since this site is still in alpha, it may have reached its daily limit of emails
             that can be sent.  Either way, we recommend that you resend from your personal
             email address.`,
-          cancelText: 'No, you send it',
+          cancelText: 'Never mind',
           confirmText: 'OK, I\'ll handle it',
           type: 'is-primary',
           onConfirm: () => {
@@ -82,20 +82,6 @@
             var body = mailTemplates.generateText(character)
             var mailto = encodeURI(`${character.email}?subject=${subject}&body=${body}`)
             window.open(`mailto:${mailto}`, '_blank')
-          },
-          onCancel: () => {
-            axios.post(`/api/characters/${character._id}/invite`)
-              .then(() => this.$toast.open({
-                message: `Email sent to ${character.email}`,
-                type: 'is-dark'
-              }))
-              .catch((e) => {
-                console.error(e)
-                this.$toast.open({
-                  message: 'Email could not be sent',
-                  type: `is-error`
-                })
-              })
           }
         })
       }
