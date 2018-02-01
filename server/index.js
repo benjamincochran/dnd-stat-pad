@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import bodyParser from 'body-parser';
+import RateLimit  from 'express-rate-limit';
 import { Nuxt, Builder } from 'nuxt'
 
 import api from './api'
@@ -17,7 +18,16 @@ app.use(cors({
   origin: 'https://dnd-stat-pad.herokuapp.com'
 }))
 
-// Import API Routes
+if (process.env.NODE_ENV === 'production') {
+  app.enable('trust proxy');
+}
+var apiLimiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minutes
+  max: 20,
+  delayMs: 0 // disabled
+})
+
+app.use('/api', apiLimiter)
 app.use('/api', api)
 
 // Import and Set Nuxt.js options
