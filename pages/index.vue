@@ -52,7 +52,7 @@
         sitekey="6LfqcUMUAAAAADgd_eZzw4CawebWT4rsEF4dw-4w">
       </vue-recaptcha>
       <b-field position="is-centered">
-        <button class="button is-primary is-large" type="submit">Go!</button>
+        <button :class="{button: true, 'is-primary': true, 'is-large': true, 'is-loading': submitting}" type="submit">Go!</button>
       </b-field>
     </form>
   </section>
@@ -72,7 +72,8 @@
         emails: [],
         fixedOrder: false,
         name: null,
-        errors: []
+        errors: [],
+        submitting: false
       }
     },
     head () {
@@ -89,6 +90,7 @@
     },
     methods: {
       onExpire () {
+        this.submitting = false
         this.$toast.open({
           message: 'Recaptcha problems!',
           type: `is-error`
@@ -102,9 +104,11 @@
           name: this.name
         })
           .then((response) => {
+            this.submitting = false
             this.$nuxt.$router.replace({ path: '/campaigns/' + response.data.id })
           })
           .catch((error) => {
+            this.submitting = false
             Object.values(error.response.data.error.errors).map((err) => {
               if (err.message) {
                 this.errors.push(err.message)
@@ -114,6 +118,7 @@
       },
       onSubmit () {
         this.errors = []
+        this.submitting = true
         this.$refs.invisibleRecaptcha.execute()
       }
     }
