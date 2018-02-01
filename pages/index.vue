@@ -44,13 +44,6 @@
           Fixed Order
         </b-switch>
       </b-field>
-      <vue-recaptcha 
-        ref="invisibleRecaptcha"
-        @verify="onVerify"
-        @expired="onExpire"
-        size="invisible"
-        sitekey="6LfqcUMUAAAAADgd_eZzw4CawebWT4rsEF4dw-4w">
-      </vue-recaptcha>
       <b-field position="is-centered">
         <button :class="{button: true, 'is-primary': true, 'is-large': true, 'is-loading': submitting}" type="submit">Go!</button>
       </b-field>
@@ -59,13 +52,9 @@
 </template>
 
 <script>
-  import VueRecaptcha from 'vue-recaptcha'
   import axios from '~/plugins/axios'
 
   export default {
-    components: {
-      VueRecaptcha
-    },
     data () {
       return {
         diceCount: 4,
@@ -89,14 +78,9 @@
       }
     },
     methods: {
-      onExpire () {
-        this.submitting = false
-        this.$toast.open({
-          message: 'Recaptcha problems!',
-          type: `is-error`
-        })
-      },
-      onVerify (response) {
+      onSubmit () {
+        this.errors = []
+        this.submitting = true
         axios.post('/api/campaigns', {
           emails: this.emails,
           diceCount: this.diceCount * 1,
@@ -115,11 +99,6 @@
               }
             })
           })
-      },
-      onSubmit () {
-        this.errors = []
-        this.submitting = true
-        this.$refs.invisibleRecaptcha.execute()
       }
     }
   }
