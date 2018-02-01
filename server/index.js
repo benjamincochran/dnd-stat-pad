@@ -1,4 +1,6 @@
 import express from 'express'
+import helmet from 'helmet'
+import cors from 'cors'
 import bodyParser from 'body-parser';
 import { Nuxt, Builder } from 'nuxt'
 
@@ -9,7 +11,11 @@ const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
 app.set('port', port)
-app.use(bodyParser.json());
+app.use(bodyParser.json())
+app.use(helmet())
+app.use(cors({
+  origin: 'https://dnd-stat-pad.herokuapp.com'
+}))
 
 // Import API Routes
 app.use('/api', api)
