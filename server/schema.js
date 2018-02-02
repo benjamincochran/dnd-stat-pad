@@ -3,7 +3,7 @@ const uuidv4 = require('uuid/v4')
   
 mongoose.connect('mongodb://' + process.env.MONGO_CONNECTION + '/dnd-stat-pad?ssl=true')
 
-let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const CharacterSchema = new mongoose.Schema({
   _id: { type: String, default: uuidv4 },
