@@ -30,19 +30,27 @@
             maxtags="9">
         </b-taginput>
       </b-field>
-      <b-field>
-        <b-select v-model="diceCount">
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </b-select>
-        <p class="control">
-          <span class="button is-static">d6</span>
-        </p>
-      </b-field>
-      <b-field>
-        <b-switch v-model="fixedOrder">
-          Fixed Order
-        </b-switch>
+      <div class="label">Settings</div>
+      <b-field grouped class="settings">
+        <b-field>
+          <b-select v-model="diceCount">
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </b-select>
+          <p class="control">
+            <span class="button is-static">d6</span>
+          </p>
+        </b-field>
+        <b-field>
+          <b-switch v-model="fixedOrder">
+            Fixed Order
+          </b-switch>
+        </b-field>
+        <b-field>
+          <b-switch v-model="rerollOnes">
+            Reroll 1s
+          </b-switch>
+        </b-field>
       </b-field>
       <b-field position="is-centered">
         <button :class="{button: true, 'is-primary': true, 'is-large': true, 'is-loading': submitting}" type="submit">Go!</button>
@@ -60,6 +68,7 @@
         diceCount: 4,
         emails: [],
         fixedOrder: false,
+        rerollOnes: false,
         name: null,
         errors: [],
         submitting: false
@@ -67,14 +76,7 @@
     },
     head () {
       return {
-        title: 'Generate A New Campaign',
-        script: [
-          {
-            src: 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
-            async: false,
-            defer: true
-          }
-        ]
+        title: 'Generate A New Campaign'
       }
     },
     methods: {
@@ -85,6 +87,7 @@
           emails: this.emails,
           diceCount: this.diceCount * 1,
           fixedOrder: this.fixedOrder,
+          rerollOnes: this.rerollOnes,
           name: this.name
         })
           .then((response) => {
@@ -104,6 +107,13 @@
   }
 </script>
 
-<style lang="scss" scoped="true">
-  
+<style lang="scss">
+  .settings {
+    display: flex;
+    align-items: center;
+
+    & > .field {
+      margin-bottom: 0;
+    } 
+  }
 </style>

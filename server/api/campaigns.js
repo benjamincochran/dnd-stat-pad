@@ -19,10 +19,12 @@ router.post('/campaigns', function (req, res, next) {
     let diceCount = req.body.diceCount
     let emails = req.body.emails
     let fixedOrder = req.body.fixedOrder
+    let rerollOnes = req.body.rerollOnes
     let name = req.body.name
     Campaign.create({
       diceCount: diceCount,
       fixedOrder: fixedOrder,
+      rerollOnes: rerollOnes,
       name: name,
       characters: emails.map((email) => {
         return {

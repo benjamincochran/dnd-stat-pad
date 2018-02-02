@@ -21,13 +21,20 @@ const CharacterSchema = new mongoose.Schema({
 })
 
 const CampaignSchema = new mongoose.Schema({
-  _id: { type: String, default: uuidv4 },
+  _id: { 
+    type: String, 
+    default: uuidv4 
+  },
   name: {
     type: String,
     required: true
   },
   diceCount: Number,
   fixedOrder: Boolean,
+  rerollOnes: {
+    type: Boolean,
+    default: false
+  },
   created: { 
     type: Date, 
     default: Date.now, 

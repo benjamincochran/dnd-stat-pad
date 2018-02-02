@@ -4,6 +4,21 @@ import { Campaign } from '../schema'
 import mailer from '../mailer'
   
 const router = Router()
+const sides = 6
+
+const rerollOnes = function(results) {
+  let onesCount = results.filter(function (result) {
+    return result === 1
+  }).length
+  if (!onesCount) {
+    return results
+  }
+  let rerolledResults = results.concat([])
+  for (let i = 0; i < onesCount; i++) {
+    rerolledResults.push(Math.floor(Math.random() * (sides - 1))%(sides - 1) + 2)
+  }
+  return rerolledResults
+}
 
 function unsortedEquals(a1, a2) {
   if (!a1 || !a2 || a1.length !== a2.length) return false
@@ -17,7 +32,7 @@ function unsortedEquals(a1, a2) {
 
 router.get('/characters/:id', function (req, res, next) {
   Campaign
-    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder created name characters.$')
+    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder rerollOnes created name characters.$')
     .then((campaign) => {
       if (!campaign || campaign.characters.length !== 1) return res.sendStatus(404)
       res.json({
@@ -25,6 +40,7 @@ router.get('/characters/:id', function (req, res, next) {
           name: campaign.name,
           diceCount: campaign.diceCount,
           fixedOrder: campaign.fixedOrder,
+          rerollOnes: campaign.rerollOnes,
           created: campaign.created
         },
         character: campaign.characters[0]
@@ -36,13 +52,21 @@ router.get('/characters/:id', function (req, res, next) {
 router.post('/characters/:id/roll', function(req, res, next) {
   // expect index; generate die values, calculate sum, store sum, return both dice and total
   Campaign
-    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder characters.$')
+    .findOne({'characters._id': req.params.id}, 'diceCount fixedOrder rerollOnes characters.$')
     .then((campaign) => {
       if (!campaign || campaign.characters.length !== 1) return res.sendStatus(404)
-      let roll = (new Roll()).roll(campaign.diceCount + 'd6b3')
       if (!Number.isInteger(req.body.index) || campaign.characters[0].stats[req.body.index]) {
         return Promise.reject({message: 'No munchkins allowed! (bad roll)'})
       }
+      let transformations = [['best-of', 3], 'sum']
+      if (campaign.rerollOnes) {
+        transformations.splice(0, 0, rerollOnes)
+      }
+      let roll = (new Roll()).roll({
+        quantity: campaign.diceCount,
+        sides,
+        transformations
+      })
       let setArgs = {}
       setArgs['characters.$.stats.' + req.body.index] = roll.result
       if (campaign.fixedOrder && campaign.characters[0].stats.filter((stat) => !stat).length <= 1) {
@@ -52,16 +76,17 @@ router.post('/characters/:id/roll', function(req, res, next) {
         { 'characters': { $elemMatch: { '_id': req.params.id, 'finalized': false } } }, 
         { $set: setArgs },
         { new: true, projection: { 'characters': { $elemMatch: { '_id': req.params.id } } } }
-      ).then((campaign) => Promise.resolve({campaign, roll}))
-    })
-    .then(({campaign, roll}) => {
-      res.json({
-        finalized: campaign.characters[0].finalized,
+      ).then((campaign) => Promise.resolve({
+        campaign, 
         stat: roll.result,
-        dice: roll.rolled
-      })
+        dice: roll.calculations[2]
+      }))
     })
-    .catch((e) => res.status(500).end(e.message));
+    .then((response) => res.json(response))
+    .catch((e) => {
+      console.error(e)
+      res.status(500).end(e.message)
+    })
 })
 
 router.post('/characters/:id/arrange', function(req, res, next) {

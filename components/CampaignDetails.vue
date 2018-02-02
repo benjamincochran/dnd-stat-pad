@@ -4,6 +4,7 @@
     <dl>
       <dt>Dice</dt><dd>{{ diceCount }}d6</dd>
       <dt>Fixed Order</dt><dd>{{ fixedOrder }}</dd>
+      <dt>Reroll Ones</dt><dd>{{ rerollOnes }}</dd>
     </dl>
     <h3>Time Remaining</h3>
     <dl>

@@ -124,19 +124,19 @@
 
 <style lang="scss">
   @import "~assets/css/_colors";
-  $roll-time: 200ms;
+  $roll-time: 150ms;
   
   .roll-dice-enter, .show-stat-enter /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
   }
 
   .show-stat-enter-active {
-    transition: opacity 0.5s ease-in #{$roll-time * 4}; // ideally, "4" should come from data
+    transition: opacity 0.5s ease-in #{$roll-time * 8};
   }
 
   .roll-dice-enter-active {
     transition: opacity 0.5s;
-    @for $i from 1 through 4 {  // ideally, "4" should come from data
+    @for $i from 1 through 8 {
       &:nth-of-type(#{$i}) {
         transition-delay: #{$roll-time * $i}; 
       }
